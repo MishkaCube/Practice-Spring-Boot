@@ -4,18 +4,18 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Person {
+//создание таблицы
+public class Excursion {
 
     @Id
     private Long id;
     private String name;
-    private String second_name;
-    private LocalDate date;
+    private String description;
+    private Integer price;
 
 }
