@@ -1,18 +1,20 @@
-package com.example.demo.guide;
+package com.example.demo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @RequiredArgsConstructor
-//определяем ДТО
-public class GuideDto {
+public class ReviewsDto {
     private Long id;
-    private String name;
-    private String second_name;
+    private String username;
+    private String reviews;
+    private LocalDate date;
+    private Integer rating;
 }
-

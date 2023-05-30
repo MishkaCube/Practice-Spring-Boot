@@ -1,27 +1,26 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Excursion;
-import com.example.demo.excursion.ExcursionCreateDto;
+import com.example.demo.dto.ExcursionCreateDto;
 import com.example.demo.mapper.ExcursionMapper;
-import com.example.demo.excursion.ExcursionDto;
+import com.example.demo.dto.ExcursionDto;
 import com.example.demo.repository.ExcursionRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ExcursionService {
 
     private final ExcursionRepository repository;
     private final ExcursionMapper mapper;
 
-    public ExcursionService(ExcursionRepository repository, ExcursionMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     public List<ExcursionDto> getExcursion() {
         return repository.findAll()
@@ -29,7 +28,7 @@ public class ExcursionService {
                 .map(mapper::excursionToExcursionDto).collect(Collectors.toList());
     }
 
-    public ExcursionDto getExcursionByID(Long id)  {
+    public ExcursionDto getExcursionById(Long id)  {
         return mapper.excursionToExcursionDto((repository.findById(id).orElse(null)));
     }
 
@@ -39,8 +38,12 @@ public class ExcursionService {
 
     public ExcursionDto createExcursion(ExcursionCreateDto request) {
         log.info("Создание экскурсии");
-        Excursion excursion = mapper.excursionDtoToExcursion(request);
+        Excursion excursion = mapper.toExcursion(request);
         repository.save(excursion);
         return mapper.excursionToExcursionDto(excursion);
+    }
+
+    public List<ExcursionDto> getExcByCity(String city) {
+        return repository.findByCity(city).stream().map(mapper::excursionToExcursionDto).collect(Collectors.toList());
     }
 }
