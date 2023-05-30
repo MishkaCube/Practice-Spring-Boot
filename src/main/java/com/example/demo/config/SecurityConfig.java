@@ -25,17 +25,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .antMatcher("/")
                 .authorizeRequests()
-                .antMatchers("/api/",
-                        "/v3/api-docs.yaml", "/v3/api-docs/",
-                        "/swagger-ui.html/", "/devcloudy-api.html", "/swagger-ui/", "api/v1/registration/")
+                .antMatchers("/v3/api-docs.yaml", "/v3/api-docs/",
+                        "/swagger-ui.html/", "/swagger-ui/**", "api/v1/registration/")
                 .permitAll()
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()
+                .csrf().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
