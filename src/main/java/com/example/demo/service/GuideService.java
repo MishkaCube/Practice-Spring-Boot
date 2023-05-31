@@ -10,6 +10,7 @@ import com.example.demo.repository.GuideRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 public class GuideService {
+
     private final GuideRepository repositoryGuide;
     private final GuideMapper mapperGuide;
     private final ExcursionRepository excursionRepository;
@@ -37,12 +39,15 @@ public class GuideService {
         repositoryGuide.deleteById(id);
     }
 
+    @Transactional
     public GuideDto createGuide(GuideCreateDto request) {
         log.info("Создание гида");
         Guide guide = mapperGuide.guideDtoToGuide(request);
         repositoryGuide.save(guide);
         return mapperGuide.guideToGuideDto(guide);
     }
+
+    @Transactional
     public void setGuideForExc(Long guideId, Long excId) {
         Guide guide = repositoryGuide.findById(guideId).orElseThrow(() -> new EntityNotFoundException("Entity not Found!"));
         Excursion excursion = excursionRepository.findById(excId).orElseThrow(() -> new EntityNotFoundException("Entity not Found!"));

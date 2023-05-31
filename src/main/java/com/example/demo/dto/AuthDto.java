@@ -1,9 +1,8 @@
 package com.example.demo.dto;
 
-import lombok.Data;
+import lombok.With;
 
-@Data
-public class AuthDto {
-    private String email;
-    private String password;
+@With
+public record AuthDto(String email, String password) {
+
 }

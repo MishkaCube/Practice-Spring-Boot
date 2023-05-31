@@ -6,6 +6,7 @@ import com.example.demo.service.ExcursionService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
+/**
+ * REST экскурсий
+ */
+
 @RestController
-@RequestMapping("/excursion")
-@AllArgsConstructor
-@Getter
-@Setter
+@RequiredArgsConstructor
+@RequestMapping("api/excursion")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ExcursionController {
 

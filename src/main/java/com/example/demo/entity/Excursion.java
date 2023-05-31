@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//создание таблицы
 public class Excursion {
 
     @Id

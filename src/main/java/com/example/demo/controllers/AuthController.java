@@ -1,10 +1,9 @@
 package com.example.demo.controllers;
 
-import com.example.demo.config.JWTUtil;
+import com.example.demo.jwt.JWTUtil;
 import com.example.demo.dto.AuthDto;
 import com.example.demo.dto.UserCreateDTO;
 import com.example.demo.dto.UserDTO;
-import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,6 @@ import java.util.Map;
 @RequestMapping("auth")
 public class AuthController {
     private final UserService userService;
-    private final UserMapper userMapper;
     private final JWTUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
@@ -36,7 +34,7 @@ public class AuthController {
     public Map<String, String> auth(@RequestBody AuthDto request) {
 
         UsernamePasswordAuthenticationToken authenticationToken
-                = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+                = new UsernamePasswordAuthenticationToken(request.email(), request.password());
 
         try {
             authenticationManager.authenticate(authenticationToken);
@@ -44,7 +42,7 @@ public class AuthController {
             throw new BadCredentialsException("Bad credentials");
         }
 
-        String jwt = jwtUtil.generateToken(request.getEmail());
+        String jwt = jwtUtil.generateToken(request.email());
         return Map.of("accessToken", jwt);
     }
 }

@@ -6,6 +6,7 @@ import com.example.demo.service.GuideService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,50 +14,74 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
-@AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("api/guide")
+@RequiredArgsConstructor
 public class GuideController {
 
     private final GuideService service;
 
-    @GetMapping(value = "/Guide")
-    public List<GuideDto> getGuide() {
-        return service.getGuide();
+    @GetMapping
+    public ResponseEntity<Object> getGuide() {
+        try {
+            return new ResponseEntity<>(service.getGuide(), HttpStatus.ACCEPTED);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(exception.toString(), HttpStatus.CONFLICT);
+        }
     }
 
     @GetMapping(
-            value = "/Guide/{GuideID}",
+            value = "/{guideId}",
             produces = {"application/json"}
     )
-    public ResponseEntity<GuideDto> getGuide(
+    public ResponseEntity<Object> getGuide(
             @Parameter(description = "Идентификатор гида", required = true)
-            @PositiveOrZero @PathVariable("GuideID") Long GuideID) {
-        return ResponseEntity.ok(service.getGuideByID(GuideID));
+            @PositiveOrZero @PathVariable("guideId") Long guideId) {
+        try {
+            return new ResponseEntity<>(service.getGuideByID(guideId), HttpStatus.ACCEPTED);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(exception.toString(), HttpStatus.CONFLICT);
+        }
     }
 
-    @DeleteMapping(value = "/Guide/{GuideID}")
-    public ResponseEntity<Void> deleteGuide(
+    @DeleteMapping(value = "/{guideId}")
+    public ResponseEntity<Object> deleteGuide(
             @Parameter(description = "Идентификатор гида", required = true)
-            @PositiveOrZero @PathVariable("GuideID") Long GuideID) {
-        service.deleteGuide(GuideID);
-        return ResponseEntity.noContent().build();
+            @PositiveOrZero @PathVariable("guideId") Long guideId) {
+        try {
+            service.deleteGuide(guideId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception exception) {
+            return ResponseEntity.internalServerError().body(exception.toString());
+        }
+
     }
 
-    @PostMapping(value = "/Guide/createGuide")
-    public ResponseEntity<GuideDto> createGuide(
+    @PostMapping(value = "/create")
+    public ResponseEntity<Object> createGuide(
             @Parameter(description = "Запрос на создание гида")
             @Valid @RequestBody GuideCreateDto request) {
-        return new ResponseEntity<>(service.createGuide(request), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(service.createGuide(request), HttpStatus.CREATED);
+        } catch (Exception exception) {
+            return ResponseEntity.internalServerError().body(exception.toString());
+        }
     }
 
     @PutMapping(value = "/guide/setGuide")
-    public ResponseEntity<Void> setGuideForExc(
+    public ResponseEntity<Object> setGuideForExc(
             @PositiveOrZero @RequestParam("guideId") Long guideId,
             @PositiveOrZero @RequestParam("excId") Long excId
     ) {
-        service.setGuideForExc(guideId, excId);
-        return ResponseEntity.noContent().build();
+        try {
+            service.setGuideForExc(guideId, excId);
+            return ResponseEntity.accepted().body("Successful");
+        } catch (Exception exception) {
+            return ResponseEntity.internalServerError().body(exception.toString());
+        }
     }
 
 }

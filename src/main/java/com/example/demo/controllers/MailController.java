@@ -2,18 +2,19 @@ package com.example.demo.controllers;
 
 import com.example.demo.service.MailServ;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@AllArgsConstructor
-@RequestMapping(value = "api/sendMail")
+@RequestMapping(value = "api/mail")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 public class MailController {
+
     private final MailServ mailServ;
-    @PostMapping
+
+    @PostMapping("/send")
     public ResponseEntity<Void> sendMail(@RequestParam String text,
                                          @RequestParam String to,
                                          @RequestParam String subject) {

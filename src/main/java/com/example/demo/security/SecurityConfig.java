@@ -1,5 +1,14 @@
-package com.example.demo.config;
+/*
+ * Copyright (c) 2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
 
+package com.example.demo.security;
+
+import com.example.demo.jwt.JWTFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     private final UserDetailsService userDetailsService;
     private final JWTFilter filter;
 
@@ -26,16 +36,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/v3/api-docs.yaml", "/v3/api-docs/",
-                        "/swagger-ui.html/", "/swagger-ui/**", "api/v1/registration/")
-                .permitAll()
+                    .antMatchers("/v3/api-docs/**",
+                        "/swagger-ui.html/**", "/swagger-ui/**", "/auth/reg/**", "/auth/login/**")
+                    .permitAll()
                 .and()
-                .authorizeRequests()
-                .anyRequest().authenticated()
+                    .authorizeRequests()
+                    .anyRequest().authenticated()
                 .and()
-                .csrf().disable()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                    .csrf().disable()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }

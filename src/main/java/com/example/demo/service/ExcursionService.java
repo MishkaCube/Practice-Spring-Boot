@@ -8,6 +8,7 @@ import com.example.demo.repository.ExcursionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,7 @@ public class ExcursionService {
             repository.deleteById(id);
     }
 
+    @Transactional
     public ExcursionDto createExcursion(ExcursionCreateDto request) {
         log.info("Создание экскурсии");
         Excursion excursion = mapper.toExcursion(request);

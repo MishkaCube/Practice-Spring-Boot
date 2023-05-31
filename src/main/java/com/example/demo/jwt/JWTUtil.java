@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+/**
+ * Генерация JWT и валидация существующих
+ */
 @Component
 public class JWTUtil {
     @Value("${jwt_secret}")

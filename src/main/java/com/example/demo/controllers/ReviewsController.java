@@ -1,14 +1,12 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dto.ExcursionCreateDto;
-import com.example.demo.dto.ExcursionDto;
 import com.example.demo.dto.ReviewsCreateDto;
 import com.example.demo.dto.ReviewsDto;
-import com.example.demo.service.ExcursionService;
 import com.example.demo.service.ReviewsService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +16,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/reviews")
-@AllArgsConstructor
-@Getter
-@Setter
+@RequestMapping("api/reviews")
 @CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor
 public class ReviewsController {
+
     private final ReviewsService service;
 
     @GetMapping

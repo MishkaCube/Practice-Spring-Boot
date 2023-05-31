@@ -11,7 +11,6 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "excrusions")
-//создание таблицы
 public class Guide {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class UserService {
+
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -24,6 +26,8 @@ public class UserService {
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream().map(userMapper::entityToUserDto).collect(Collectors.toList());
     }
+
+    @Transactional
     public UserDTO signUp(UserCreateDTO request) {
         boolean isUserExists =
                 userRepository.findByEmail(request.getEmail())
@@ -31,7 +35,6 @@ public class UserService {
         if (isUserExists) {
             throw new IllegalStateException("Такой Email уже есть!");
         }
-        request.setRole(UserRole.ROLE_USER);
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         request.setIsActive(true);
 

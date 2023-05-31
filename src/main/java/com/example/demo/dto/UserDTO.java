@@ -1,11 +1,17 @@
 package com.example.demo.dto;
 
 import com.example.demo.entity.UserRole;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.With;
 
 import java.time.LocalDateTime;
 
 @Data
+@With
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
     private Long id;
     private String name;

@@ -1,7 +1,7 @@
-package com.example.demo.config;
+package com.example.demo.jwt;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.example.demo.service.UserDetailsServ;
+import com.example.demo.security.UserDetailsServ;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Кастомный фильтр (в других технологиях может называться interceptor)
+ * Проверяет наличие в запросе JWT а его валидность
+ * Логика проверки реализована прямо в методе фильтра, но можно вынести в отдельный метод
+ */
 @Component
 @AllArgsConstructor
 public class JWTFilter extends OncePerRequestFilter {
