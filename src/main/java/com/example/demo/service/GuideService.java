@@ -42,7 +42,8 @@ public class GuideService {
     @Transactional
     public GuideDto createGuide(GuideCreateDto request) {
         log.info("Создание гида");
-        Guide guide = mapperGuide.guideDtoToGuide(request);
+        Guide guide = mapperGuide.guideCreateDtoToGuide(request);
+        log.info(guide.toString());
         repositoryGuide.save(guide);
         return mapperGuide.guideToGuideDto(guide);
     }

@@ -10,8 +10,8 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "excrusions")
 public class Guide {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

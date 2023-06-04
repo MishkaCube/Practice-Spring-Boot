@@ -9,5 +9,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface GuideMapper {
     GuideDto guideToGuideDto(Guide entity);
-    Guide guideDtoToGuide(GuideCreateDto dto);
+    Guide guideCreateDtoToGuide(GuideCreateDto dto);
 }

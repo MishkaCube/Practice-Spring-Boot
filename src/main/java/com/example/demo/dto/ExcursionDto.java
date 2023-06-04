@@ -1,10 +1,27 @@
 package com.example.demo.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
 
 //определяем ДТО
-public record ExcursionDto(Long id, String name, String description, Integer price, String image_url, LocalDate date,
-                           String duration, String city) {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class ExcursionDto {
+
+    private Long id;
+    private String name;
+    private String description;
+    private Integer price;
+    private String image_url;
+    private LocalDate date;
+    private String duration;
+    private String city;
 
 }

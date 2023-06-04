@@ -2,9 +2,10 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.GuideCreateDto;
 import com.example.demo.dto.GuideDto;
+import com.example.demo.dto.ReviewsCreateDto;
+import com.example.demo.dto.ReviewsDto;
 import com.example.demo.service.GuideService;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -61,14 +62,9 @@ public class GuideController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<Object> createGuide(
-            @Parameter(description = "Запрос на создание гида")
-            @Valid @RequestBody GuideCreateDto request) {
-        try {
-            return new ResponseEntity<>(service.createGuide(request), HttpStatus.CREATED);
-        } catch (Exception exception) {
-            return ResponseEntity.internalServerError().body(exception.toString());
-        }
+    public ResponseEntity<GuideDto> createNew(@Parameter(description = "Запрос на создание гида")
+                                                @Valid @RequestBody GuideCreateDto request) {
+        return new ResponseEntity<>(service.createGuide(request), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/guide/setGuide")
